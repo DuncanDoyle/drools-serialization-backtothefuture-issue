@@ -1,0 +1,17 @@
+package org.jboss.ddoyle.drools.serialization;
+
+import org.jboss.ddoyle.drools.serialization.model.SimpleEvent;
+
+declare SimpleEvent
+    @role( event )
+    @timestamp( timestamp )
+    @expires( 2d )
+end
+
+rule "rule_01"
+    when
+       $firstSimpleEvent: SimpleEvent()
+       not SimpleEvent (this after[0, 24h] $firstSimpleEvent)
+    then
+       System.out.println("RULE FIRED!!!!!!!");
+end
